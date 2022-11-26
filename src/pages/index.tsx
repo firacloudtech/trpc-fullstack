@@ -1,11 +1,10 @@
 import Head from "next/head";
-import Image from "next/image";
 import styles from "../styles/Home.module.css";
 import { APP_CONFIG } from "../utils/appConfig";
 import { trpc } from "../utils/trpc";
 
 export default function Home() {
-  const { data, isLoading } = trpc.hello.useQuery({ text: "Kyle" });
+  const { data, isLoading } = trpc.hello.hello.useQuery({ text: "Kyle" });
 
   if (isLoading) return <div>Loading</div>;
 
