@@ -1,4 +1,5 @@
 import Head from "next/head";
+import Link from "next/link";
 import styles from "../styles/Home.module.css";
 import { APP_CONFIG } from "../utils/appConfig";
 import { trpc } from "../utils/trpc";
@@ -18,6 +19,11 @@ export default function Home() {
 
       <main className={styles.main}>
         <h1 className="font-bold text-2xl">{data?.greeting}</h1>
+
+        <Link href="/posts" className="btn btn-secondary">
+          {" "}
+          Posts
+        </Link>
       </main>
 
       <footer className={styles.footer}>
