@@ -1,7 +1,32 @@
-import { GetStaticProps } from "next";
-import prisma from "../../lib/prisma";
+import { trpc } from "@/utils/trpc";
+import { Post } from "@/utils/types/post.type";
 
-export default function Posts({ posts }) {
+type Props = {
+  posts: Post[];
+};
+
+export default function Posts() {
+  const utils = trpc.useContext();
+
+  const { data: posts, isLoading } = trpc.post.list.useQuery({
+    limit: 15,
+  });
+
+  const addPost = trpc.post.add.useMutation({
+    onSuccess(input) {
+      utils.post.list.invalidate();
+    },
+  });
+
+  async function onSubmit() {
+    addPost.mutate({
+      title: "Hello2",
+      content: "New post",
+      published: true,
+    });
+  }
+
+  if (isLoading) return <div>Loading</div>;
   return (
     <div className="px-10 min-h-screen py-10">
       <h1 className="mb-4">Post</h1>
@@ -15,17 +40,10 @@ export default function Posts({ posts }) {
             <p>{post.content}</p>
           </div>
         ))}
+
+      <button className="btn btn-primary" onClick={() => onSubmit()}>
+        Hello
+      </button>
     </div>
   );
 }
-
-export const getStaticProps: GetStaticProps = async () => {
-  const posts = await prisma.post.findMany({
-    where: { published: true },
-  });
-
-  console.timeLog("props", posts);
-  return {
-    props: { posts },
-  };
-};
