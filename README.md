@@ -4,4 +4,5 @@ Using:
 
 - TailwindCSS
 - Prisma ORM
-- tRPC
+- tRPC https://trpc.io/
+
