@@ -12,15 +12,7 @@ const userList: User[] = [
   {
     id: "0",
     name: "Yogen",
-  },
-  {
-    id: "1",
-    name: "Audrey",
-  },
-  {
-    id: "2",
-    name: "Kyle",
-  },
+  }
 ];
 
 export const userRouter = router({
